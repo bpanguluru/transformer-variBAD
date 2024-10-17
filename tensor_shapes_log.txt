@@ -1,0 +1,4 @@
+Tensor 0 shape: 16
+Tensor 1 shape: 16
+Tensor 2 shape: 16
+Tensor 3 shape: 16
