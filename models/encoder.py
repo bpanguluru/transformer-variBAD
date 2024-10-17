@@ -27,7 +27,7 @@ class RNNEncoder(nn.Module):
                  args,
                  # network size
                  layers_before_gru=(),
-                 hidden_size=64, 
+                 hidden_size=64,
                  layers_after_gru=(),
                  latent_dim=32,
                  # actions, states, rewards
