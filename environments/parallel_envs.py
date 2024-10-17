@@ -48,7 +48,7 @@ def make_vec_envs(env_name, seed, num_processes, gamma,
                      **kwargs)
             for i in range(num_processes)]
 
-    if len(envs) > 1:
+    if not torch.cuda.is_available() and len(envs) > 1:
         envs = SubprocVecEnv(envs)
     else:
         envs = DummyVecEnv(envs)
