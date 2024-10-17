@@ -37,6 +37,10 @@ def make_vec_envs(env_name, seed, num_processes, gamma,
     """
     :param ret_rms: running return and std for rewards
     """
+    #preventing parallelization when gpu active
+    if(torch.cuda.is_available()):
+        num_processes = 1
+        
     envs = [make_env(env_id=env_name, seed=seed, rank=rank_offset + i,
                      episodes_per_task=episodes_per_task,
                      tasks=tasks,

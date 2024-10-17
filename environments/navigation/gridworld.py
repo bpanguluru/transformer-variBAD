@@ -147,7 +147,7 @@ class GridNavi(gym.Env):
         return state, reward, done, info
 
     def task_to_id(self, goals):
-        mat = torch.arange(0, self.num_cells ** 2).long().reshape((self.num_cells, self.num_cells))
+        mat = torch.arange(0, self.num_cells ** 2).long().reshape((self.num_cells, self.num_cells)).to(device)
         if isinstance(goals, list) or isinstance(goals, tuple):
             goals = np.array(goals)
         if isinstance(goals, np.ndarray):
