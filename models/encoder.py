@@ -626,8 +626,6 @@ class TransformerEncoder(nn.Module):
 
         self.positional_embedding = nn.Linear(max_seq_len, d_model)
         self.input_projection = nn.Linear(curr_input_dim, d_model)
-        #use for testing skip connection
-        #self.project_to_dim = nn.Linear(curr_input_dim, d_model)
         
         # make x transformer layers
         self.transformer_layers = nn.ModuleList(   
@@ -730,28 +728,25 @@ class TransformerEncoder(nn.Module):
         # separated position embed below
         # pos_emb = self.positional_embedding(pos_idxs)
         h = self.input_projection(h) + pos_emb
-
-        #for residuals (for a proper transformer arch)
-        positionally_encoded_embedding = h
+        
+        #for residuals (for a "proper" transformer arch)
+        #positionally_encoded_embedding = h
 
         # Forward through Transformer layers
         for layer in self.transformer_layers:
-            h = self.norm(h)
             h = layer(h)
         
-        #for residuals (for a proper transformer arch)
+        #for residuals (for a "proper" transformer arch)
         #dont forget norms
-        h += positionally_encoded_embedding
-        attention_output = h
-        
+        #h += positionally_encoded_embedding
+        #attention_output = h
         h = self.norm(h)
 
         # Forward through fully connected layers after Transformer
         for fc_layer in self.fc_after_transformer:
             h = F.relu(fc_layer(h))
         #dont forget norms
-        #h = self.project_to_dim(h)
-        h += attention_output
+        #h += attention_output
         h = self.norm(h)
 
         # Outputs
